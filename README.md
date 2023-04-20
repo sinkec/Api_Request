@@ -13,9 +13,11 @@ And add the following line to the application tag:
 ### 2. Network Security Configuration (network_security_config.xml)
 Create a file called network_security_config.xml in the xml folder and add the following lines:
 
-`<?xml version="1.0" encoding="utf-8"?>`
-`<network-security-config>`
-`<base-config cleartextTrafficPermitted="true">`
-`</base-config>`
-`</network-security-config>`
+```XML 
+<?xml version="1.0" encoding="utf-8"?>`
+<network-security-config>
+<base-config cleartextTrafficPermitted="true">
+</base-config>
+</network-security-config>
+```
 
