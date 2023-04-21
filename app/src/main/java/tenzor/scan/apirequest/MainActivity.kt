@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         btnApiReq.setOnClickListener {
 
             val apiTest = PostRequest()
-            val myJson = apiTest.createJson("ST1",ApiData.CONST_DATA_TYPE_MIFARE, 546351, "2021-05-12 12:00:00")
+            val myJson = apiTest.createJson("ST1", ApiData.CONST_DATA_TYPE_MIFARE, 546351, "2021-05-12 12:00:00")
             apiTest.postJson("192.168.100.117",8080, myJson)
         }
     }
