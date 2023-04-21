@@ -2,28 +2,35 @@ package tenzor.scan.apirequest
 
 import android.util.Log
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-class ApiRequest(){
-    fun helloApi(){
+class PostRequest(){
+    val JSON = CONST_JSON.toMediaType()
+    val client = OkHttpClient()
 
-            val payload = "application/json; charset=utf8"
-            val okHttpClient = OkHttpClient()
-            val requestBody = payload.toRequestBody()
+    fun createJson(terminalID:String,terminalDataType:String,terminalData:Int,terminalDateTime:String): String {
+        return "{\"devID\": \"$terminalID\"," +
+               " \"devDataType\": \"$terminalDataType\"," +
+               " \"devData\": \"$terminalData\","+
+               " \"devDataTime\": \"$terminalDateTime\"}"
+    }
+    fun postJson(host:String,port:Int,json: String){
+
+            val requestBody = json.toRequestBody(JSON)
 
             val request = Request.Builder()
-                .method("POST",requestBody)
-                .url("http://192.168.100.117:8080/api")
-                //.url("https://mysafeinfo.com/api/data?list=autocompanies&format=json&case=default")
+                .url("http://$host:$port/")
+                .post(requestBody)
                 .build()
 
-            okHttpClient.newCall(request).enqueue(object: Callback {
+            client.newCall(request).enqueue(object: Callback {
                 override fun onFailure(call: Call, e:IOException ) {
                     Log.e("API", "Request failed: ${e.message}")
                 }
                 override fun onResponse(call: Call, response: Response) {
-                    Log.e("API", "${response.body?.string()}")
+                    response.body?.string()?.let { Log.e("API", it) }
                     //TODO: Response spremeni v string ali json
                 }
             })
